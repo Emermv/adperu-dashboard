@@ -2,9 +2,11 @@
 const routes = [
   {
     path: '/',
-    component: () => import('layouts/MyLayout.vue'),
+    component: () => import('layouts/Dashboard.vue'),
     children: [
-      { path: '', component: () => import('pages/Index.vue') }
+      { path: '', component: () => import('pages/Index.vue') },
+      {path:'form_manager',component:()=>import('pages/Form_manager.vue')},
+      {path:'settings',component:()=>import('pages/Settings.vue')}
     ]
   }
 ]
