@@ -93,7 +93,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable class="GPLAY__drawer-link GPLAY__drawer-link--books">
+        <q-item clickable class="GPLAY__drawer-link GPLAY__drawer-link--books" @click="navigate('/report')">
           <q-item-section avatar class="books-icon bg-blue-7 text-grey-1 text-center">
             <q-icon name="report" />
           </q-item-section>
