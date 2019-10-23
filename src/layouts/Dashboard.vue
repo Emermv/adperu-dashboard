@@ -1,7 +1,7 @@
 <template>
   <q-layout view="hHh LpR fFf" class="bg-grey-3">
     <q-header class="bg-grey-3 text-grey-9" reveal height-hint="60">
-      <q-toolbar class="GPLAY__toolbar text-grey-6">
+      <q-toolbar class="GPLAY__toolbar text-grey-6 ">
         <q-btn
           v-if="this.$q.platform.is.mobile || !leftDrawerOpen"
           flat
@@ -75,12 +75,12 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable class="GPLAY__drawer-link GPLAY__drawer-link--movies">
+        <q-item clickable class="GPLAY__drawer-link GPLAY__drawer-link--movies" @click="navigate('/leads')">
           <q-item-section avatar class="movies-icon bg-red-7 text-grey-1 text-center">
             <q-icon name="local_movies" />
           </q-item-section>
           <q-item-section class="movies-text">
-            <q-item-label>Movies & TV</q-item-label>
+            <q-item-label>Campañas</q-item-label>
           </q-item-section>
         </q-item>
 
@@ -146,7 +146,7 @@ export default {
   },
   methods:{
       navigate(to="/"){
-      this.$router.push(to);
+      this.$router.push("/dashboard"+to);
     }
   }
 }

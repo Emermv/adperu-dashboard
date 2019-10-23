@@ -13,8 +13,6 @@ mode int default 1,
 creation_date datetime,
 modification_date datetime
 );
-
-
 create table users(
 id int not null primary key auto_increment,
 company_id int not null,
@@ -30,7 +28,6 @@ creation_date datetime,
 modification_date datetime,
 foreign key(company_id) references company(id)
 );
-
 /*COMPANY DB TABLES*/
 create table form(
 id int not null primary key auto_increment,
@@ -50,9 +47,8 @@ state int  default 1,
 creation_date datetime,
 modification_date datetime,
 foreign key(form_id) references form(id),
-foreign key(user_id) references users(id)
+foreign key(user_id) references app_db.users(id)
 );
-
 create table scope(
 id int not null primary key auto_increment,
 name varchar(45),
@@ -60,7 +56,6 @@ state int  default 1,
 creation_date datetime,
 modification_date datetime
 );
-
 create table bell_scope(
 id int not null primary key auto_increment,
 bell_id int not null,
@@ -70,7 +65,6 @@ modification_date datetime,
 foreign key(bell_id) references bell(id),
 foreign key(scope_id) references scope(id)
 );
-
 create table lead(
 id int not null primary key auto_increment,
 bell_scope_id int not null,
@@ -83,7 +77,6 @@ state int  default 1,
 creation_date datetime,
 foreign key(bell_scope_id) references bell_scope(id)
 );
-
 create table lead_data(
 id int not null primary key auto_increment,
 lead_id int not null,

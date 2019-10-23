@@ -22,7 +22,8 @@ export default {
     }
   },
   mounted(){
-   Highcharts.chart(this.$refs.container, {
+
+   this.$H.chart(this.$refs.container, {
 
     title: {
         text: 'Solar Employment Growth by Sector, 2010-2016'

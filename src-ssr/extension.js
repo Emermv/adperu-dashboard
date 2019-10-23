@@ -11,6 +11,8 @@
  * development server, but such updates are costly since the dev-server needs a reboot.
  */
 
+var session=require('express-session');
+var bodyParser = require('body-parser');
 module.exports.extendApp = function ({ app, ssr }) {
   /*
      Extend the parts of the express app that you
@@ -18,4 +20,87 @@ module.exports.extendApp = function ({ app, ssr }) {
 
      Example: app.use(), app.get() etc
   */
+ app.use(session({ secret: 'your secret here' }));
+ app.use(bodyParser.urlencoded({ extended: false }));
+ app.use(bodyParser.json());
+ app.get('/',(req,res,next)=>{
+    if(req.session.user){
+      res.redirect('/dashboard')
+    }else{
+      next();
+    }
+ });
+ app.get('/dashboard',(req,res,next)=>{
+  if(req.session.user){
+    next();
+    
+  }else{
+    res.redirect('/')
+  }
+});
+
+ app.route('/service/:service/:action').get((req,res)=>{
+   var service=req.params.service;
+  var cls= require("./service/"+ service.charAt(0).toUpperCase() + service.slice(1));
+   var $service=new cls();
+     $service[req.params.action]().then(response=>{
+      $service.set('result',response);
+      $service.set('state',response?true:false);
+     res.json($service.toJSON());
+    });
+}).post((req,res)=>{
+  var service=req.params.service;
+  var cls= require("./service/"+ service.charAt(0).toUpperCase() + service.slice(1));
+   var $service=new cls();
+     $service[req.params.action](req.body).then(response=>{
+       $service.set('result',response);
+       $service.set('state',response?true:false);
+      res.json($service.toJSON());
+     });
+}).delete((req,res)=>{
+  var service=req.params.service;
+  var cls= require("./service/"+ service.charAt(0).toUpperCase() + service.slice(1));
+   var $service=new cls();
+     $service.destroy(req.params.action).then(response=>{
+       $service.set('result',response);
+       $service.set('state',response?true:false);
+      res.json($service.toJSON());
+     });
+});
+/*
+app.get('/service/:service/:action/:id',(req,res)=>{
+  var service=req.params.service;
+  var cls= require("./service/"+ service.charAt(0).toUpperCase() + service.slice(1));
+   var $service=new cls();
+     $service[req.params.action](req.params.id).then(response=>{
+      $service.set('result',response);
+      $service.set('state',response?true:false);
+     res.json($service.toJSON());
+    });
+});
+*/
+
+
+app.get('/session',(req,res)=>{
+   res.json({
+       session:req.session
+   });
+});
+app.post('/service/authentication',(req,res)=>{
+var Authentication=require('./service/Authentication');
+var auth=new Authentication();
+auth.run(req.body).then(response=>{
+req.session.user=response[0];
+auth.set('state',true);
+res.json(auth.toJSON());
+}).catch(error=>{
+  res.json(auth.toJSON());
+});
+});
+
+app.get('/exit',(req,res)=>{
+     req.session.destroy();
+     res.redirect('/');
+});
+
 }

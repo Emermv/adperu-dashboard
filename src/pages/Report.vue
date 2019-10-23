@@ -22,7 +22,7 @@ export default {
     }
   },
   mounted(){
-  Highcharts.chart(this.$refs.container, {
+  this.$H.chart(this.$refs.container, {
     chart: {
         type: 'bar'
     },
@@ -67,7 +67,7 @@ export default {
         floating: true,
         borderWidth: 1,
         backgroundColor:
-            Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+            this.$H.defaultOptions.legend.backgroundColor || '#FFFFFF',
         shadow: true
     },
     credits: {
