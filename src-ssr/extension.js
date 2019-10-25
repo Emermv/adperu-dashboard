@@ -52,7 +52,7 @@ module.exports.extendApp = function ({ app, ssr }) {
   var service=req.params.service;
   var cls= require("./service/"+ service.charAt(0).toUpperCase() + service.slice(1));
    var $service=new cls();
-     $service[req.params.action](req.body).then(response=>{
+     $service[req.params.action](req.body,req.session,req).then(response=>{
        $service.set('result',response);
        $service.set('state',response?true:false);
       res.json($service.toJSON());
@@ -82,8 +82,11 @@ app.get('/service/:service/:action/:id',(req,res)=>{
 
 
 app.get('/session',(req,res)=>{
+  var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
    res.json({
-       session:req.session
+       session:req.session,
+       ip:ip,
+       ua:req.headers['user-agent']
    });
 });
 app.post('/service/authentication',(req,res)=>{
@@ -102,5 +105,9 @@ app.get('/exit',(req,res)=>{
      req.session.destroy();
      res.redirect('/');
 });
+/*
+app.get('/form/:form',(req,res,next)=>{
 
+});
+*/
 }

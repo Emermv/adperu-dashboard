@@ -7,8 +7,8 @@
           <q-btn icon="settings" dense flat class="GPLAY__sticky-settings q-ml-md" size="12px" />
         </q-toolbar>
       </q-page-sticky>
-      <div ref="container" style="width:100%; height:400px;"></div>
-
+     
+     <img src="statics/sample.png">
   </q-page>
 </template>
 
@@ -17,12 +17,13 @@ export default {
   name: 'PageIndex',
   data(){
     // <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
+    // <div ref="container" style="width:100%; height:400px;"></div>
     return {
 
     }
   },
   mounted(){
-
+return;
    this.$H.chart(this.$refs.container, {
 
     title: {

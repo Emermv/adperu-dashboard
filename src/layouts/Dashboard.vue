@@ -14,7 +14,7 @@
         />
 
         <div class="q-pr-lg" v-if="$q.screen.gt.xs">
-          <img class="GPLAY__logo" src="statics/icons/logo.png">
+          <img class="GPLAY__logo cursor-pointer" src="statics/icons/logo.png" @click="navigate('/')">
         </div>
 
         <q-space />
@@ -38,11 +38,26 @@
             <q-tooltip>Notificaciones</q-tooltip>
           </q-btn>
 
+
           <q-btn round flat>
             <q-avatar size="26px">
               <img src="https://cdn.quasar.dev/img/boy-avatar.png">
             </q-avatar>
-            <q-tooltip>Mi cuenta</q-tooltip>
+            <q-menu auto-close>
+          <q-list style="min-width: 100px">
+            <q-item clickable>
+              <q-item-section>New tab</q-item-section>
+            </q-item>
+            <q-item clickable>
+              <q-item-section>New incognito tab</q-item-section>
+            </q-item>
+            <q-separator />
+            <q-item clickable tag="a" href="/exit">
+              <q-item-section>Cerar sesión</q-item-section>
+            </q-item>
+
+          </q-list>
+        </q-menu>
           </q-btn>
         </div>
       </q-toolbar>
@@ -75,7 +90,7 @@
           </q-item-section>
         </q-item>
 
-        <q-item clickable class="GPLAY__drawer-link GPLAY__drawer-link--movies" @click="navigate('/leads')">
+        <q-item clickable class="GPLAY__drawer-link GPLAY__drawer-link--movies" @click="navigate('/bell')">
           <q-item-section avatar class="movies-icon bg-red-7 text-grey-1 text-center">
             <q-icon name="local_movies" />
           </q-item-section>
@@ -83,16 +98,6 @@
             <q-item-label>Campañas</q-item-label>
           </q-item-section>
         </q-item>
-
-        <q-item clickable class="GPLAY__drawer-link GPLAY__drawer-link--music">
-          <q-item-section avatar class="music-icon bg-orange-7 text-grey-1 text-center">
-            <q-avatar size="22px" color="white" text-color="orange-7" icon="music_note" />
-          </q-item-section>
-          <q-item-section class="music-text">
-            <q-item-label>Music</q-item-label>
-          </q-item-section>
-        </q-item>
-
         <q-item clickable class="GPLAY__drawer-link GPLAY__drawer-link--books" @click="navigate('/report')">
           <q-item-section avatar class="books-icon bg-blue-7 text-grey-1 text-center">
             <q-icon name="report" />

@@ -12,8 +12,12 @@ const routes = [
       {path:'form_manager',component:()=>import('pages/Form_manager.vue')},
       {path:'report',component:()=>import('pages/Report.vue')},
       {path:'settings',component:()=>import('pages/Settings.vue')},
-      {path:'leads',component:()=>import('pages/Leads.vue')},
+      {path:'bell',component:()=>import('pages/Bell.vue')},
     ]
+  },
+  {
+    path:'/form/:form',
+    component:()=>import('layouts/Form.vue')
   }
 ]
 

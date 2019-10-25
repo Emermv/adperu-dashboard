@@ -10,12 +10,15 @@ Vue.use(Vuex)
  * directly export the Store instantiation
  */
 
-export default function (/* { ssrContext } */) {
+export default function ( { ssrContext } ) {
+
   const Store = new Vuex.Store({
     modules: {
       // example
     },
-
+state:{
+  name:'emer',
+},
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEV

@@ -36,7 +36,7 @@ if (ssr.settings.pwa) {
 app.use('/', serve('.', true))
 
 // we extend the custom common dev & prod parts here
-extension.extendApp({ app, ssr })
+extension.extendApp({ app, ssr },ssr.mergeRendererOptions)
 
 // this should be last get(), rendering with SSR
 app.get('*', (req, res) => {

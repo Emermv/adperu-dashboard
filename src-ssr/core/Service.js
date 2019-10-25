@@ -15,6 +15,9 @@ class Service{
      }
      this.response={state:false,message:''};
     }
+    getLink(){
+      return this.pool;
+    }
     insert(table,args){
  return new Promise((resolve,reject)=>{
     this.pool.getConnection((err, connection)=>{
