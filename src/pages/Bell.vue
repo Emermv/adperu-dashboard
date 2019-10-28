@@ -34,6 +34,7 @@
         <q-td :props="props">
            <q-btn size="12px" color="negative" flat dense round icon="delete" />
             <q-btn  size="12px"  color="primary" flat dense round icon="remove_red_eye" @click="show_detail(props.row.id)"/>
+           <q-btn size="12px" color="green" flat dense round icon="cloud_download" @click="donwload(props.row.id)" />
         </q-td>
       </template>
 
@@ -282,8 +283,10 @@ export default {
     },
     open_url(url){
       window.open(url,'_blank');
+    },
+    donwload(id){
+      window.open('donwload/'+id,'_blank');
     }
-    
   },
   watch:{
     search(val){

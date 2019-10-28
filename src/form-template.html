@@ -1,16 +1,69 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>XD <%= htmlWebpackPlugin.options.productName %></title>
+    <title>PAUTA DIGITAL</title>
 
     <meta charset="utf-8">
-    <meta name="description" content="<%= htmlWebpackPlugin.options.productDescription %>">
+    <meta name="description" content="description">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (htmlWebpackPlugin.options.ctx.mode.cordova || htmlWebpackPlugin.options.ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>">
      <link rel="icon" type="image/png" href="statics/icons/icon.png">
+     <style>
+       table{
+         width: 100%;
+       }
+       body{
+         padding: 0;
+         margin: 0;
+         font-family: Arial, Helvetica, sans-serif;
+       }
+     </style>
   </head>
   <body>
-    <div id="q-app"></div>
+    <table cellpading="0" cellspacing="0">
+    <tr>
+      <td>
+        <strong>CLIENTE:</strong><br>
+        <strong>PRODUCTO:</strong><br>
+        <strong>PERIODO:</strong><br>
+      </td>
+      <td align="right">
+        <img src="/statics/icons/logo.png" alt="" style="height: 50px;">
+      </td>
+    </tr>
+    </table>
+    <br>
+    <table cellspacing="0" cellspadding="0">
+      <thead style="background:#ff0909;color: white;">
+       <tr >
+        <th>MEDIO</th>
+        <th>TARIFA TIPO</th>
+        <th>COSTO</th>
+        <th>FORMATO</th>
+        <th>MES</th>
+        <th>CLICS/IMPRESIONES</th>
+        <th>INVERSIÓN</th>
+        <th>OPTIMIZACIÓN</th>
+        <th>NETO</th>
+       </tr>
+      </thead>
+      <tbody>
+        <tr v-for="row in rows">
+          <td>{{decodeURIComponent(row.name)}}</td>
+          <td>CPC</td>
+          <td></td>
+          <td>Banner</td>
+          <td>
+            <strong>Clics estimados:{{row.y}}</strong><br>
+            <strong>Inversión:500</strong>
+          </td>
+          <td>{{row.y}} clics</td>
+          <td>500</td>
+          <td>{{500*0.15}}</td>
+          <td>{{500+(500*0.15)}}</td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>

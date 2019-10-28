@@ -95,6 +95,9 @@ class Bell extends Service{
 
       });
     }
+    donwload(id){
+      return this.execute("select s.name,count(l.id) as y from bell_scope as bs join lead as l on l.bell_scope_id=bs.id join scope as s on s.id=bs.scope_id where bs.bell_id=? group by bs.id order by count(l.id) desc",[id]);
+    }
 }
 
 module.exports=Bell;

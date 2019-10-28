@@ -124,4 +124,30 @@ app.get('/form/:form',(req,res,next)=>{
 
 });
 */
+app.get('/donwload/:id',(req,res)=>{
+  var id=req.params.id;
+  const Vue = require('vue');
+res.set("Content-Type","application/force-download");
+res.set("Content-disposition","attachment; filename=export.xls");
+
+const renderer = require('vue-server-renderer').createRenderer();
+  var cls= require("./service/Bell");
+   var $service=new cls();
+     $service.donwload(id).then(response=>{
+      const $app = new Vue({
+        template: require('fs').readFileSync('src/form-template.html', 'utf-8'),
+        data(){
+          return {rows:response}
+        }
+      });
+      renderer.renderToString($app).then(html => {
+        res.send(html);
+      }).catch(err => {
+        console.error(err)
+      });
+
+    }).catch(error=>{
+      res.json({state:false,error:error.stack});
+    });
+});
 }
