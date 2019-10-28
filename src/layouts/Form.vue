@@ -212,13 +212,25 @@ MAN:['Hasta 30 toneladas',
         this.$axios
           .post("service/lead/create", {form:this.$route.params.form,data:this.form})
           .then(response => {
-             this.$q.notify({
+             if(response.data.state){
+               this.$socket.emit("getData");
+                 this.$q.notify({
                 color: "primary",
                 textColor: "white",
                 position: "center",
                 message: "Gracias por completar este formulario!",
                 actions: [{ label: "Ok", color: "white" }]
               });
+              
+             }else{
+               this.$q.notify({
+                color: "negative",
+                textColor: "white",
+                position: "center",
+                message: "Ocurrió un error inesperado!",
+                actions: [{ label: "Ok", color: "white" }]
+              });
+             }
           });
       });
     }

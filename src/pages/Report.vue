@@ -18,74 +18,86 @@ export default {
   data(){
     // <img alt="Quasar logo" src="~assets/quasar-logo-full.svg">
     return {
+      data:[]
+    }
+  },
+  created(){
+    
+    this.$socket.on("data",(data)=>{
+     console.log("new data",data) 
+        this.chart.series[0].setData(data);
+    });
+    this.$socket.on("drilldown",(drilldown)=>{
+     this.chart.hideLoading();
+     this.chart.addSeriesAsDrilldown(this.active_point,{
+         name:this.active_point.options.name,
+         id:this.active_point.options.drilldown,
+         data:drilldown,
+         colorByPoint:true
+     } );
+    });
+    
+  },
+  mounted(){
+      this.$Drilldown(this.$H);
+       this.$socket.emit("getData");
+this.chart=this.$H.chart(this.$refs.container, {
+  chart: {
+    type: 'column',
+      events:{
+    drilldown:(e)=>{
+        console.log("drilldown",e)
+        this.chart.showLoading("Obteniendo datos, espere por favor!");
+        this.active_point=e.point;
+        this.$socket.emit('getDrilldown',e.point.options.id);
+    
 
     }
   },
-  mounted(){
-  this.$H.chart(this.$refs.container, {
-    chart: {
-        type: 'bar'
-    },
+  },
+  title: {
+    text: 'Campañas'
+  },
+  subtitle: {
+    text: 'Leads por campaña'
+  },
+  xAxis: {
+    type: 'category'
+  },
+  yAxis: {
     title: {
-        text: 'Historic World Population by Region'
-    },
-    subtitle: {
-        text: 'Source: <a href="https://en.wikipedia.org/wiki/World_population">Wikipedia.org</a>'
-    },
-    xAxis: {
-        categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
-        title: {
-            text: null
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Population (millions)',
-            align: 'high'
-        },
-        labels: {
-            overflow: 'justify'
-        }
-    },
-    tooltip: {
-        valueSuffix: ' millions'
-    },
-    plotOptions: {
-        bar: {
-            dataLabels: {
-                enabled: true
-            }
-        }
-    },
-    legend: {
-        layout: 'vertical',
-        align: 'right',
-        verticalAlign: 'top',
-        x: -40,
-        y: 80,
-        floating: true,
-        borderWidth: 1,
-        backgroundColor:
-            this.$H.defaultOptions.legend.backgroundColor || '#FFFFFF',
-        shadow: true
-    },
-    credits: {
-        enabled: false
-    },
-    series: [{
-        name: 'Year 1800',
-        data: [107, 31, 635, 203, 2]
-    }, {
-        name: 'Year 1900',
-        data: [133, 156, 947, 408, 6]
-    }, {
-        name: 'Year 2000',
-        data: [814, 841, 3714, 727, 31]
-    }, {
-        name: 'Year 2016',
-        data: [1216, 1001, 4436, 738, 40]
-    }]
+      text: 'Total de leads'
+    }
+
+  },
+  legend: {
+    enabled: false
+  },
+  plotOptions: {
+    series: {
+      borderWidth: 0,
+      dataLabels: {
+        enabled: true,
+        format: '{point.y}'
+      }
+    }
+  },
+
+  tooltip: {
+    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> del total<br/>'
+  },
+
+  series: [
+    {
+      name: "Campañas",
+      colorByPoint: true,
+      data:this.data
+    }
+  ],
+  drilldown: {
+    series: []
+  }
 });
   }
 }

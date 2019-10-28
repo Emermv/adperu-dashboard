@@ -194,7 +194,6 @@ export default {
   created(){
   this.getData();
   this.getResources();
-  console.log(this)
   },
   mounted(){
   //this.$refs.grid.requestServerInteraction();

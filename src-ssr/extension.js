@@ -13,6 +13,8 @@
 
 var session=require('express-session');
 var bodyParser = require('body-parser');
+//var io = require('socket.io');
+//var http = require('http');
 module.exports.extendApp = function ({ app, ssr }) {
   /*
      Extend the parts of the express app that you
@@ -20,6 +22,12 @@ module.exports.extendApp = function ({ app, ssr }) {
 
      Example: app.use(), app.get() etc
   */
+ //var $http=http.createServer(app);
+ /*const socket=io(app);
+ socket.on('connection', (s)=>{
+  console.log('a user connected');
+});*/
+
  app.use(session({ secret: 'your secret here' }));
  app.use(bodyParser.urlencoded({ extended: false }));
  app.use(bodyParser.json());
@@ -47,6 +55,8 @@ module.exports.extendApp = function ({ app, ssr }) {
       $service.set('result',response);
       $service.set('state',response?true:false);
      res.json($service.toJSON());
+    }).catch(error=>{
+      res.json({state:false,error:error.stack});
     });
 }).post((req,res)=>{
   var service=req.params.service;
@@ -56,6 +66,8 @@ module.exports.extendApp = function ({ app, ssr }) {
        $service.set('result',response);
        $service.set('state',response?true:false);
       res.json($service.toJSON());
+     }).catch(error=>{
+       res.json({state:false,error:error.stack});
      });
 }).delete((req,res)=>{
   var service=req.params.service;
@@ -65,7 +77,9 @@ module.exports.extendApp = function ({ app, ssr }) {
        $service.set('result',response);
        $service.set('state',response?true:false);
       res.json($service.toJSON());
-     });
+     }).catch(error=>{
+      res.json({state:false,error:error.stack});
+    });
 });
 /*
 app.get('/service/:service/:action/:id',(req,res)=>{

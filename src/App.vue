@@ -6,6 +6,11 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  created(){
+    this.$socket.on('connect', ()=>{
+    console.log("connected");
+    });
+  }
 }
 </script>

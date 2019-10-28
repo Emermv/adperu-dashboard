@@ -78,6 +78,23 @@ class Bell extends Service{
     destroy(id){
       return this.execute('delete from scope where id=?',[id]);
     }
+    getData(){
+      return this.execute("SELECT  b.id,b.title as name,count(l.id) as y FROM bell as b join bell_scope as bs on bs.bell_id=b.id join lead as l on l.bell_scope_id=bs.id group by b.id order by count(l.id) desc",[],(row)=>{
+        row.name=decodeURIComponent(row.name);
+        row.drilldown='drilldown-'+row.id;
+      });
+    }
+    getDrilldown(id){
+      return new Promise((resolve,reject)=>{
+        var data=[];
+          this.execute("select s.name,count(l.id) as y from bell_scope as bs join lead as l on l.bell_scope_id=bs.id join scope as s on s.id=bs.scope_id where bs.bell_id=? group by bs.id order by count(l.id) desc",[id],(row)=>{
+          data.push([decodeURIComponent(row.name),row.y]);
+          }).then(result=>{
+              resolve(data);
+          }).catch(reject);
+
+      });
+    }
 }
 
 module.exports=Bell;
